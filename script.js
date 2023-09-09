@@ -1,18 +1,20 @@
 let turn = 'X';
 let header =document.querySelector('.header')
 let squares=[]
-
+let gameOver = false
 function reloadGame(n1,n2,n3){
-    header.innerHTML=`${squares[n1]} Winner`
-    document.getElementById('item'+n1).style.background='#000'
-    document.getElementById('item'+n2).style.background='#000'
-    document.getElementById('item'+n3).style.background='#000'
+    gameOver = true
+    header.innerHTML=`${squares[n1]} Winner🎉🥳`
+    document.getElementById('item'+n1).style.background='#003566'
+    document.getElementById('item'+n2).style.background='#003566'
+    document.getElementById('item'+n3).style.background='#003566'
+    header.style.background='#003566'
     setInterval(()=>{
      header.innerHTML +='.'
-    },1000)
+    },750)
     setTimeout(()=>{
         location.reload()
-    },4000)
+    },3000)
 
 }
 
@@ -48,19 +50,26 @@ else if(squares[1]==squares[5] && squares[5]==squares[9] && squares[1]!=""){
  else if(squares[3]==squares[5] && squares[5]==squares[7] && squares[5]!=""){
     reloadGame(3,5,7)    
                             }
- else if (squares.slice(1).every(square => square !== "")) {
-  header.innerHTML = "It's a Draw!";
+// checking draw
+ else if (squares.slice(1).every(square => square !== "")) 
+ {
+  header.innerHTML = "No winner this time";
+  setInterval(()=>{
+    header.innerHTML +='.'
+   },1000) 
   setTimeout(() => {    
-    setInterval(()=>{
-        header.innerHTML +='.'
-       },1000)                               
+                                  
  location.reload();
   }, 4000);
-
-                            }
+ }
+ 
 }
 
 function game(id) {
+
+    if(gameOver) {
+   return;    
+    }
     let element = document.getElementById(id);
     if (turn === 'X' && element.innerHTML == '') {
         element.innerHTML = 'X'; 
